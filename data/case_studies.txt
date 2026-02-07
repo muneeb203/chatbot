@@ -1,0 +1,77 @@
+Convo Sol Case Studies & Product Highlights
+
+Convo Sol has worked on several intelligent automation and AI-driven projects aimed at helping businesses streamline their operations and improve customer engagement. Below is an overview of one of our flagship projects and in-house products.
+
+1. Voas — AI Voice Assistant for Food Businesses
+
+Overview:
+Voas is an AI-powered voice assistant developed by Convo Sol specifically for the food and restaurant industry. It automates customer communication — from taking orders to confirming deliveries — without human intervention.
+
+The system integrates seamlessly with restaurant management tools, POS systems, and delivery platforms to provide a complete end-to-end solution for automating voice-based order handling.
+
+Key Features:
+
+Automated Call Handling:
+Voas can answer incoming calls, understand customer requests, and handle entire conversations naturally through AI-driven speech recognition and synthesis.
+
+Order Placement:
+The system takes food orders directly over the call, confirms menu items, applies available deals, and forwards the order to the kitchen system or POS.
+
+Payment & Confirmation:
+Supports multiple payment methods, sends automated confirmation messages, and updates the customer about order status in real time.
+
+Order Tracking & Updates:
+Customers can call or ask Voas about their delivery status, estimated time, or previous order history — all handled via AI voice conversation.
+
+Multilingual Capability:
+Designed for regional markets; supports English, Urdu, and other local languages for a natural communication flow.
+
+Technology Stack:
+
+Speech-to-Text (STT): Whisper API
+
+Text-to-Speech (TTS): OpenAI / Google Cloud TTS
+
+AI Brain: RAG-enhanced LLM for intent understanding and contextual dialogue
+
+Integration Layer: Node.js + Twilio for call automation
+
+Backend: Flask + PostgreSQL for order management
+
+Business Impact:
+
+Reduced call handling time by 60%
+
+Increased order accuracy and customer satisfaction
+
+Allowed restaurants to operate efficiently even during peak hours without needing additional staff
+
+Scalable across multiple restaurant branches and franchise models
+
+Client Use Case Example:
+A mid-sized restaurant chain in Islamabad implemented Voas to handle incoming orders and customer queries. Within the first month:
+
+Average customer wait time dropped from 3 minutes to under 30 seconds
+
+Manual call volume reduced by 70%
+
+Staff productivity improved, allowing focus on kitchen and delivery operations
+
+Future Roadmap for Voas:
+
+Integration with food delivery platforms like Foodpanda and Cheetay
+
+Voice sentiment detection for customer satisfaction tracking
+
+Smart upselling through personalized order recommendations
+
+2. Upcoming Case Studies
+
+Convo Sol is currently working with clients in education, marketing automation, and e-commerce to implement AI-driven workflow optimization and customer engagement systems.
+Future case studies will highlight:
+
+Smart chatbot solutions for educational institutions
+
+Predictive analytics for digital marketing performance
+
+SaaS-based automation dashboards for SMEs

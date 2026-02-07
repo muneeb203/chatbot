@@ -1,0 +1,17 @@
+{
+  "name": "convosol-chatbot-backend",
+  "version": "1.0.0",
+  "description": "Production-ready chatbot backend with RAG for Vercel",
+  "main": "api/chat.js",
+  "scripts": {
+    "dev": "node server.js",
+    "deploy": "npx vercel"
+  },
+  "dependencies": {
+    "openai": "^4.28.0",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

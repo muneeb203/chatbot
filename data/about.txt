@@ -1,0 +1,52 @@
+About Convo Sol
+Convo Sol is an Islamabad-based AI SaaS company dedicated to bridging the gap between technology and business owners. We build intelligent automation tools that simplify customer engagement, streamline operations, and empower organizations to work smarter. Our products combine cutting-edge AI with practical business logic, making advanced automation accessible to startups and enterprises alike.
+
+Mission
+Our mission is to make AI adoption effortless and impactful for every business. We aim to eliminate repetitive tasks, reduce operational bottlenecks, and enable teams to focus on creativity and strategy. Convo Sol exists to help organizations harness artificial intelligence not as a luxury, but as a necessity for growth and efficiency.
+
+Vision
+We envision a future where AI-driven automation becomes the backbone of modern businesses — improving communication, decision-making, and customer experience worldwide. Convo Sol strives to become a trusted global partner for companies seeking scalable, secure, and intelligent SaaS solutions.
+
+Founders
+Convo Sol has 3 co-founders:
+
+Muneeb Qureshi
+Role: Leads the technical vision and architecture of our solutions. Expert in full-stack dev and scaling systems.
+Email: muneebq2003@gmail.com
+Phone: +92 330 0078040
+LinkedIn: https://www.linkedin.com/in/muneebqureshi2003/
+
+Muhammad Hadi
+Email: muhammadhadiabid@gmail.com
+Phone: +92 300 8443839
+LinkedIn: https://www.linkedin.com/in/muhammad-hadi-abid
+
+Awais Khaleeq
+Email: ds.awaisk@gmail.com
+Phone: +92 307 5777504
+LinkedIn: https://www.linkedin.com/in/muhammad-awais-khaleeq
+
+
+History
+Founded in 2024, Convo Sol started as a small software initiative focused on chatbot automation and workflow optimization. As client demand grew, the team expanded its expertise into predictive analytics, voice assistants, and custom SaaS development. Today, Convo Sol works with both local and international clients across industries like business automation, education, marketing, and SaaS platforms.
+
+Team
+The Convo Sol team is a group of AI developers, data engineers, web and app developers, and product designers united by a shared goal — making AI usable for everyone. Our culture emphasizes innovation, collaboration, and transparency. Each member contributes unique expertise to ensure that every solution we build is technically sound, user-friendly, and future-ready.
+
+Core Values
+
+Transparency: We communicate openly and honestly with clients and partners.
+
+Innovation: We continuously explore new AI technologies and frameworks.
+
+Reliability: We deliver solutions that are secure, scalable, and efficient.
+
+Impact: We measure success by the real-world improvements our clients achieve.
+
+Contact Details
+
+Emails: info@convosol.com, support@convosol.com
+
+Website: convosol.com
+
+LinkedIn: https://www.linkedin.com/company/convosol/

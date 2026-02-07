@@ -1,0 +1,89 @@
+Company Policies — Convo Sol
+At Convo Sol, we believe in transparency, ethical practices, and open communication. Our policies ensure smooth collaboration, protect user data, and define mutual expectations between Convo Sol, its clients, and platform users.
+
+1. Refund Policy
+
+Convo Sol operates on a project-based and subscription-based model.
+
+Refunds are available only in specific cases, such as service non-delivery, major technical failure not resolved within the agreed timeline, or duplicate payments.
+
+For SaaS subscriptions, users may request a refund within 7 days of activation if the product fails to perform as described.
+
+Custom development or AI integration projects are non-refundable once work has begun, as resources and development time are immediately allocated.
+
+Refund requests are handled via our support channel: support@convosol.ai
+ within 10 business days.
+
+2. Communication Policy
+
+Convo Sol values clear and professional communication between the team and clients.
+
+All official communication is conducted through email, verified company channels, or the client dashboard.
+
+We ensure that project updates, deliverables, and milestones are communicated regularly.
+
+Clients are encouraged to provide prompt feedback to avoid delays.
+
+Our support team is available Monday to Friday, 10:00 AM – 6:00 PM (PKT).
+
+3. Privacy Policy
+
+Convo Sol is committed to protecting the privacy and data of all users, clients, and partners.
+
+Any data shared with Convo Sol (including business data, conversation logs, or analytics) is treated as confidential and used solely for project delivery and system improvement.
+
+We do not sell, trade, or share personal or project-related data with third parties.
+
+User data is securely stored in encrypted databases with restricted access.
+
+Clients can request data deletion or export by contacting privacy@convosol.ai
+.
+
+4. Code of Conduct
+
+All Convo Sol employees and contractors must uphold integrity, professionalism, and respect in all interactions.
+
+We prohibit any form of discrimination, harassment, or unethical behavior.
+
+Transparency and honesty form the foundation of our client relationships.
+
+5. Service Delivery Policy
+
+All projects follow a structured workflow including planning, approval, development, and testing phases.
+
+Delivery timelines are clearly mentioned in the agreement.
+
+Any delay due to third-party dependencies or scope changes is communicated in advance.
+
+Clients receive access to progress reports and demos during the development phase.
+
+6. Intellectual Property
+
+Clients retain full ownership of custom code, models, and assets developed specifically for them.
+
+Convo Sol retains rights to internal frameworks, tools, and libraries used to build solutions.
+
+AI models trained on client data are handled under mutual consent and NDA terms.
+
+7. Confidentiality Policy
+
+Both parties agree to maintain confidentiality over proprietary data, code, or project details.
+
+NDAs (Non-Disclosure Agreements) are available upon request before any data exchange.
+
+Internal data access is strictly limited to authorized team members.
+
+8. Support and Maintenance
+
+Post-delivery, Convo Sol offers 30 days of complimentary maintenance for bug fixes and minor updates.
+
+Extended maintenance or feature enhancements are handled under new project terms or monthly retainers.
+
+Clients can raise support tickets via support@convosol.ai
+ or the Convo Sol dashboard.
+
+9. Compliance
+
+Convo Sol adheres to standard digital compliance practices including GDPR-inspired privacy handling, data encryption, and user consent management.
+
+We continuously review our systems to ensure security and regulatory alignment.
