@@ -63,12 +63,19 @@ Example structure:
 
 ## Local Development
 
-Run the development server:
+1. **Install Vercel CLI globally** (one-time setup):
+```bash
+npm install -g vercel
+```
+
+2. **Run the development server**:
 ```bash
 npm run dev
 ```
 
 The API will be available at `http://localhost:3000/api/chat`
+
+**Note**: First time running `vercel dev` will ask you to login and link the project.
 
 ## Deployment to Vercel
 

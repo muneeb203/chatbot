@@ -18,31 +18,30 @@ async function ensureEmbeddingsInitialized() {
  * Set CORS headers - dynamically echo origin if allowed
  */
 function setCorsHeaders(req, res) {
-  const requestOrigin = req.headers.origin || req.headers.referer || '';
+  const requestOrigin = req.headers.origin || '';
   const allowedOrigins = [
     'http://localhost:5173',
     'https://www.convosol.com'
   ];
   
-  // Check if request origin is in allowed list
-  let allowedOrigin = '*';
+  // Echo origin if it's in allowed list, otherwise use first allowed origin
+  let allowOrigin = allowedOrigins[0];
   for (const origin of allowedOrigins) {
     if (requestOrigin.startsWith(origin)) {
-      allowedOrigin = requestOrigin;
+      allowOrigin = requestOrigin;
       break;
     }
   }
   
-  // Set CORS headers
-  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Origin', allowOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key, x-session-id, ngrok-skip-browser-warning');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key, x-session-id');
   res.setHeader('Access-Control-Max-Age', '86400');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 }
 
 /**
- * Get client IP address from request
+ * Get client IP address
  */
 function getClientIP(req) {
   return req.headers['x-forwarded-for']?.split(',')[0] || 
@@ -51,87 +50,53 @@ function getClientIP(req) {
 }
 
 /**
- * Validate API key
- */
-function validateApiKey(req) {
-  const apiKey = req.headers['x-api-key'];
-  const expectedKey = process.env.CHAT_API_KEY;
-  
-  if (!expectedKey) {
-    console.error('❌ CHAT_API_KEY not set in environment');
-    return { valid: false, error: 'Server configuration error' };
-  }
-  
-  if (!apiKey) {
-    console.log('❌ No x-api-key header provided');
-    return { valid: false, error: 'Missing API key' };
-  }
-  
-  if (apiKey !== expectedKey) {
-    console.log('❌ Invalid API key provided');
-    console.log('   Received:', apiKey.substring(0, 10) + '...');
-    console.log('   Expected:', expectedKey.substring(0, 10) + '...');
-    return { valid: false, error: 'Invalid API key' };
-  }
-  
-  console.log('✅ API key validated');
-  return { valid: true };
-}
-
-/**
- * Main serverless function handler
+ * Vercel Serverless Function Handler
  */
 module.exports = async (req, res) => {
-  console.log('\n========================================');
-  console.log(`📨 ${req.method} ${req.url}`);
-  console.log('Origin:', req.headers.origin || 'none');
-  console.log('All Headers:', JSON.stringify(req.headers, null, 2));
-  console.log('========================================');
-  
-  // ⚠️ CRITICAL: Set CORS headers BEFORE any other logic
+  // Set CORS headers first
   setCorsHeaders(req, res);
   
-  // Handle OPTIONS preflight immediately
+  // Handle OPTIONS preflight
   if (req.method === 'OPTIONS') {
-    console.log('✅ OPTIONS preflight handled');
     return res.status(200).end();
   }
   
-  // Only allow POST for actual requests
+  // Only allow POST
   if (req.method !== 'POST') {
-    console.log('❌ Method not allowed:', req.method);
     return res.status(405).json({ error: 'Method not allowed' });
   }
   
   try {
     // Validate API key
-    const apiKeyValidation = validateApiKey(req);
-    if (!apiKeyValidation.valid) {
-      return res.status(403).json({ error: apiKeyValidation.error });
+    const apiKey = req.headers['x-api-key'];
+    const expectedKey = process.env.CHAT_API_KEY;
+    
+    if (!expectedKey) {
+      console.error('CHAT_API_KEY not configured');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
+    
+    if (!apiKey || apiKey !== expectedKey) {
+      return res.status(403).json({ error: 'Invalid or missing API key' });
     }
     
     // Validate session ID
     const sessionId = req.headers['x-session-id'];
     if (!sessionId) {
-      console.log('❌ Missing x-session-id header');
       return res.status(403).json({ error: 'Missing session ID' });
     }
-    console.log('✅ Session ID:', sessionId);
     
     // Rate limiting
     const clientIP = getClientIP(req);
     if (isRateLimited(clientIP)) {
-      console.log('❌ Rate limit exceeded for IP:', clientIP);
-      return res.status(429).json({ error: 'Rate limit exceeded. Try again later.' });
+      return res.status(429).json({ error: 'Rate limit exceeded' });
     }
     
     // Validate message
     const { message } = req.body;
     if (!message || typeof message !== 'string') {
-      console.log('❌ Invalid message format');
       return res.status(400).json({ error: 'Invalid message format' });
     }
-    console.log('📝 Message:', message.substring(0, 50) + '...');
     
     // Initialize embeddings
     await ensureEmbeddingsInitialized();
@@ -142,7 +107,7 @@ module.exports = async (req, res) => {
     // Get session history
     const history = getSessionHistory(sessionId);
     
-    // Build system prompt with context
+    // Build system prompt
     const systemPrompt = `You are a helpful, conversational assistant for ConvoSol. You provide precise and accurate information based on the knowledge base provided.
 
 IMPORTANT RULES:
@@ -165,12 +130,10 @@ ${context}`;
     // Add user message to history
     addMessage(sessionId, 'user', message);
     
-    // Set SSE headers for streaming
+    // Set SSE headers
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
-    
-    console.log('🤖 Streaming response...');
     
     // Create OpenAI streaming completion
     const openai = getOpenAIClient();
@@ -184,7 +147,7 @@ ${context}`;
     
     let fullResponse = '';
     
-    // Stream response token by token
+    // Stream response
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content || '';
       if (content) {
@@ -200,10 +163,8 @@ ${context}`;
     res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
     res.end();
     
-    console.log('✅ Response completed');
-    
   } catch (error) {
-    console.error('❌ Chat API error:', error);
+    console.error('Chat API error:', error);
     
     if (!res.headersSent) {
       return res.status(500).json({ 
