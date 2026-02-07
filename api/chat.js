@@ -15,27 +15,15 @@ async function ensureEmbeddingsInitialized() {
 }
 
 /**
- * Set CORS headers - dynamically echo origin if allowed
+ * Set CORS headers - allow all origins
  */
 function setCorsHeaders(req, res) {
-  const requestOrigin = req.headers.origin || '';
-  const allowedOrigins = [
-    'http://localhost:5173',
-    'https://www.convosol.com'
-  ];
+  const requestOrigin = req.headers.origin || '*';
   
-  // Echo origin if it's in allowed list, otherwise use first allowed origin
-  let allowOrigin = allowedOrigins[0];
-  for (const origin of allowedOrigins) {
-    if (requestOrigin.startsWith(origin)) {
-      allowOrigin = requestOrigin;
-      break;
-    }
-  }
-  
-  res.setHeader('Access-Control-Allow-Origin', allowOrigin);
+  // Echo the request origin to allow all origins
+  res.setHeader('Access-Control-Allow-Origin', requestOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key, x-session-id');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-api-key, x-session-id, ngrok-skip-browser-warning');
   res.setHeader('Access-Control-Max-Age', '86400');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 }
@@ -53,7 +41,7 @@ function getClientIP(req) {
  * Vercel Serverless Function Handler
  */
 module.exports = async (req, res) => {
-  // Set CORS headers first
+  // Set CORS headers FIRST
   setCorsHeaders(req, res);
   
   // Handle OPTIONS preflight
@@ -67,29 +55,16 @@ module.exports = async (req, res) => {
   }
   
   try {
-    // Validate API key
-    const apiKey = req.headers['x-api-key'];
-    const expectedKey = process.env.CHAT_API_KEY;
-    
-    if (!expectedKey) {
-      console.error('CHAT_API_KEY not configured');
-      return res.status(500).json({ error: 'Server configuration error' });
-    }
-    
-    if (!apiKey || apiKey !== expectedKey) {
-      return res.status(403).json({ error: 'Invalid or missing API key' });
-    }
-    
     // Validate session ID
     const sessionId = req.headers['x-session-id'];
     if (!sessionId) {
-      return res.status(403).json({ error: 'Missing session ID' });
+      return res.status(400).json({ error: 'Missing session ID' });
     }
     
     // Rate limiting
     const clientIP = getClientIP(req);
     if (isRateLimited(clientIP)) {
-      return res.status(429).json({ error: 'Rate limit exceeded' });
+      return res.status(429).json({ error: 'Rate limit exceeded. Try again later.' });
     }
     
     // Validate message
@@ -147,7 +122,7 @@ ${context}`;
     
     let fullResponse = '';
     
-    // Stream response
+    // Stream response token by token
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content || '';
       if (content) {

@@ -49,7 +49,6 @@ vercel --prod
 4. **Add environment variables** via dashboard or CLI:
 ```bash
 vercel env add OPENAI_API_KEY
-vercel env add CHAT_API_KEY
 ```
 
 ## Step 3: Update Frontend
@@ -60,16 +59,30 @@ After deployment, update your frontend to use the production URL:
 const API_URL = 'https://your-project.vercel.app/api/chat';
 ```
 
-## Step 4: Update CORS
+## Step 4: Update CORS (Optional)
 
-If your frontend is on a different domain, update `api/chat.js`:
+The backend allows all origins by default. If you want to restrict to specific domains, update `api/chat.js`:
 
 ```javascript
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://www.convosol.com',
-  'https://your-frontend-domain.com'  // Add your domain
-];
+function setCorsHeaders(req, res) {
+  const requestOrigin = req.headers.origin || '*';
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://www.convosol.com'
+  ];
+  
+  // Check if origin is allowed
+  let allowOrigin = '*';
+  for (const origin of allowedOrigins) {
+    if (requestOrigin.startsWith(origin)) {
+      allowOrigin = requestOrigin;
+      break;
+    }
+  }
+  
+  res.setHeader('Access-Control-Allow-Origin', allowOrigin);
+  // ... rest of headers
+}
 ```
 
 Then redeploy:
@@ -88,7 +101,6 @@ Test your API:
 ```bash
 curl -X POST https://your-project.vercel.app/api/chat \
   -H "Content-Type: application/json" \
-  -H "x-api-key: YOUR_API_KEY" \
   -H "x-session-id: test-123" \
   -d '{"message":"Hello"}'
 ```
@@ -100,9 +112,9 @@ curl -X POST https://your-project.vercel.app/api/chat \
 - Add `OPENAI_API_KEY` with your OpenAI key
 - Redeploy
 
-### "Invalid or missing API key"
-- Ensure frontend is sending `x-api-key` header
-- Verify `CHAT_API_KEY` matches in both frontend and Vercel env vars
+### "Missing session ID"
+- Ensure frontend is sending `x-session-id` header
+- Generate with `crypto.randomUUID()`
 
 ### CORS errors
 - Check allowed origins in `api/chat.js`

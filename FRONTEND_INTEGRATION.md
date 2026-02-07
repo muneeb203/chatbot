@@ -1,5 +1,23 @@
 # Frontend Integration Guide
 
+## API Configuration
+
+**Endpoint:** 
+- Local: `http://localhost:3000/api/chat`
+- ngrok: `https://your-ngrok-url.ngrok-free.app/api/chat`
+- Production: `https://your-project.vercel.app/api/chat`
+
+**No API key required!** Just send the session ID.
+
+## Required Headers
+
+```javascript
+{
+  'Content-Type': 'application/json',
+  'x-session-id': 'unique-session-id-per-user'
+}
+```
+
 ## Complete Working Example
 
 ```javascript
@@ -8,8 +26,7 @@
 // ============================================
 
 // Configuration
-const API_URL = 'http://localhost:3000/api/chat'; // Change to ngrok URL or production URL
-const API_KEY = '610baf92050b7de2a70bcafb1ccbcba10949c431e772a747e5b2d83077bba7fa';
+const API_URL = 'http://localhost:3000/api/chat'; // Change to your backend URL
 
 // Get or create session ID (persistent per user)
 function getSessionId() {
@@ -30,7 +47,6 @@ async function sendMessage(userMessage, onToken, onComplete, onError) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
         'x-session-id': sessionId
       },
       body: JSON.stringify({ 
@@ -221,3 +237,33 @@ function appendMessage(role, content) {
   chatContainer.appendChild(div);
   return div;
 }
+
+// ============================================
+// TESTING IN BROWSER CONSOLE
+// ============================================
+
+// Quick test (paste in browser console):
+fetch('http://localhost:3000/api/chat', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-session-id': 'test-' + Date.now()
+  },
+  body: JSON.stringify({ message: 'Hello!' })
+}).then(r => console.log('Success!', r)).catch(e => console.error('Error:', e));
+```
+
+## Key Points
+
+1. **Session ID**: Generate once per user with `crypto.randomUUID()` and store in localStorage
+2. **No API key needed**: Just send the session ID
+3. **Streaming**: Response comes token-by-token via SSE
+4. **Error handling**: Always wrap in try-catch
+5. **Works with**: localhost, ngrok, and production Vercel URLs
+
+## Testing with ngrok
+
+1. Start backend: `npm run dev`
+2. Start ngrok: `ngrok http 3000`
+3. Update `API_URL` to ngrok URL
+4. Test immediately - no CORS issues!

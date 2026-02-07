@@ -4,8 +4,10 @@
   "description": "Production-ready chatbot backend with RAG for Vercel",
   "main": "api/chat.js",
   "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel --prod"
+    "start": "vercel dev",
+    "dev": "node local-server.js",
+    "deploy": "vercel --prod",
+    "chat": "node test-chat.js"
   },
   "dependencies": {
     "openai": "^4.28.0",

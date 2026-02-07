@@ -36,11 +36,9 @@ Copy `.env.example` to `.env`:
 copy .env.example .env
 ```
 
-Edit `.env` and add your values:
+Edit `.env` and add your OpenAI API key:
 ```env
 OPENAI_API_KEY=sk-your-actual-openai-api-key
-CHAT_API_KEY=your-secure-random-api-key
-ALLOWED_ORIGIN=https://www.convosol.com
 ```
 
 4. **Add knowledge base files**
@@ -126,9 +124,7 @@ POST https://your-project.vercel.app/api/chat
 
 ```
 Content-Type: application/json
-x-api-key: your-secure-api-key
 x-session-id: unique-session-identifier
-Origin: https://www.convosol.com
 ```
 
 ### Request Body
@@ -161,7 +157,6 @@ async function sendMessage(message, sessionId) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': 'your-secure-api-key',
       'x-session-id': sessionId
     },
     body: JSON.stringify({ message })
@@ -234,11 +229,10 @@ sendMessage('Hello!', sessionId);
 
 ## Security Features
 
-- ✅ Domain whitelist (only `https://www.convosol.com`)
-- ✅ API key authentication
+- ✅ CORS protection (configurable origins)
 - ✅ Rate limiting (60 requests/minute per IP)
-- ✅ CORS protection
 - ✅ No data persistence (memory-only)
+- ✅ Input validation
 
 ## Limitations
 
